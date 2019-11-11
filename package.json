@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon --inspect app.js"
   },
   "dependencies": {
     "dynamoose": "^1.11.1",
