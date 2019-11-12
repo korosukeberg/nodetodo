@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
 const dynamoose = require('dynamoose');
+const uuid = require('uuid');
 const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 const Todo = dynamoose.model('ToDo', {
-  id: Number,
+  id: String,
   title: String,
   isCompleted: Boolean
 });
@@ -30,7 +31,7 @@ app.get('/todo', (req, res) => {
 
 app.post('/todo', (req, res) => {
   const newToDo = new Todo({
-    id: req.body.id,
+    id: uuid(),
     title: req.body.title,
     isCompleted: false
   });
