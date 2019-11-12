@@ -62,8 +62,22 @@ app.delete('/todo/:id', (req, res) => {
   });
 });
 
+app.delete('/todo/delete/completed', (req, res) => {
+  Todo.scan('isCompleted').eq(true).exec((err, completedToDos) => {
+    Todo.batchDelete(completedToDos, () => {
+      res.sendStatus(200);
+      console.log('Batch deleted successfully');
+    })
+  })
+});
+
 app.delete('/todo', (req, res) => {
-  console.log()
+  Todo.scan().exec((err, response) => {
+    Todo.batchDelete(response).then(() => {
+      res.sendStatus(200);
+      console.log('Deleted all');
+    })
+  });
 });
 
 app.listen(port, () => {

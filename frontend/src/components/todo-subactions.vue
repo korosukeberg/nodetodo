@@ -29,7 +29,7 @@
     methods: {
       ...mapMutations(["clearItems", "showNoTodoSnackbar", "showErrorSnackbar"]),
       clearCompleted: function () {
-        axios.delete("/todo/completed").then(() => {
+        axios.delete("/todo/delete/completed").then(() => {
           this.clearItems();
           this.$emit("loadToDos")
         }).catch(() => {
