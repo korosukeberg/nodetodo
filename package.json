@@ -3,6 +3,7 @@
     "start": "nodemon --inspect app.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dynamoose": "^1.11.1",
     "express": "^4.17.1",
     "uuid": "^3.3.3"

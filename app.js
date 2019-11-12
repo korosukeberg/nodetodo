@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
+const cors = require('cors')
 const dynamoose = require('dynamoose');
 const uuid = require('uuid');
 const port = 3000;
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -35,13 +37,27 @@ app.post('/todo', (req, res) => {
     title: req.body.title,
     isCompleted: false
   });
-  newToDo.save().then(() => {
+  newToDo.save().then(response => {
+    res.send(response)
     console.log('Saved successfully')
   });
 });
 
+app.put('/todo/:id', (req, res) => {
+  const toUpdate = {
+    id: req.params.id,
+    title: req.body.title,
+    isCompleted: req.body.isCompleted
+  }
+  Todo.update(toUpdate, () => {
+    res.sendStatus(200);
+    console.log('Update successful');
+  })
+});
+
 app.delete('/todo/:id', (req, res) => {
   Todo.delete(req.params.id).then(() => {
+    res.sendStatus(200);
     console.log(`Deleted ${req.params.id} successfully`)
   });
 });
